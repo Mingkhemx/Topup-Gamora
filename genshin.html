@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product - GameTop</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="icon" href="images/logo1.jpg" type="image/jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Main Layout */
+        .product-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            gap: 30px;
+        }
+
+        .product-left {
+            flex: 1;
+        }
+
+        .product-right {
+            flex: 1;
+        }
+
+        /* Banner Styles */
+        .promo-banner {
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .promo-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Diamond Options Styles */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-card {
+            position: relative;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-card:hover, .option-card.selected {
+            border-color: #4a6bff;
+            box-shadow: 0 4px 12px rgba(74, 107, 255, 0.2);
+            background-color: #f5f8ff;
+        }
+
+        .option-card.selected {
+            border-width: 2px;
+        }
+
+        .diamond-amount {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .main-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .bonus-amount {
+            font-size: 12px;
+            color: #4a6bff;
+        }
+
+        .option-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background-color: #4a6bff;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* Form Styles */
+        .product-form {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* Button Styles */
+        #add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4a6bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        #add-to-cart:hover {
+            background-color: #3a5bef;
+        }
+
+        #add-to-cart:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Notification Toast */
+        #notification-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+        }
+
+        .toast-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .toast-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Product Info */
+        .product-info {
+            margin-bottom: 20px;
+        }
+
+        .product-info h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .delivery-info, .server-info {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .delivery-info i {
+            color: #4a6bff;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+        <div class="logo-container">
+            <h1>Game<span>Top</span></h1>
+        </div>
+    </header>
+    <main>
+        <!-- Promo Banner Space -->
+        <div class="product-container animate-fade-in">
+            <div class="product-left">
+                <div class="product-info">
+                    <h1 id="game-title">Genshin Primogem</h1>
+                    <p class="delivery-info"><i class="fas fa-bolt"></i> PENGIRIMAN INSTANT - HITUNGAN DETIK</p>
+                    <p class="server-info" id="server-info">REGULAR/GLOBAL SERVER ONLY</p>
+                </div>
+
+                <div class="product-form">
+                    <h3>Informasi Akun</h3>
+                    <div class="form-group">
+                        <label for="user-id">User ID</label>
+                        <input type="text" id="user-id" placeholder="Masukkan User ID">
+                        <p class="form-note">Contoh: 123456789 (12 digit)</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="server">Server</label>
+                        <select id="server">
+                            <option value="">Pilih Server</option>
+                            <option value="global">Global</option>
+                            <option value="asia">Asia</option>
+                            <option value="europe">Europe</option>
+                            <option value="america">America</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-right">
+                <div class="product-options">
+                    <h3>Pilih Jumlah Diamond</h3>
+                    <div class="options-grid" id="diamond-options">
+                        <!-- Will be filled by JavaScript -->
+                    </div>
+
+                    <button id="add-to-cart" disabled>
+                        <i class="fas fa-shopping-cart"></i> Tambahkan ke Keranjang
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="notification-toast">
+            <div class="toast-content">
+                <i class="fas fa-check-circle toast-icon"></i>
+                <span class="toast-message">Diamond telah ditambahkan ke keranjang!</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <!-- Your footer content here -->
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Diamond options data
+            const diamondOptions = [
+                { id: 1, diamonds: 50, bonus: 5, price: 15000, popular: false },
+                { id: 2, diamonds: 100, bonus: 10, price: 29000, popular: true },
+                { id: 3, diamonds: 200, bonus: 25, price: 55000, popular: false },
+                { id: 4, diamonds: 500, bonus: 75, price: 125000, popular: true },
+                { id: 5, diamonds: 1000, bonus: 200, price: 240000, popular: false },
+                { id: 6, diamonds: 2000, bonus: 500, price: 450000, popular: true }
+            ];
+
+            // DOM elements
+            const diamondOptionsContainer = document.getElementById('diamond-options');
+            const userIdInput = document.getElementById('user-id');
+            const serverSelect = document.getElementById('server');
+            const addToCartButton = document.getElementById('add-to-cart');
+            const notificationToast = document.getElementById('notification-toast');
+            let selectedDiamondOption = null;
+
+            // Render diamond options
+            function renderDiamondOptions() {
+                diamondOptionsContainer.innerHTML = '';
+                diamondOptions.forEach(option => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option-card';
+                    if (option.popular) {
+                        optionElement.classList.add('popular');
+                    }
+                    
+                    optionElement.innerHTML = `
+                        <div class="diamond-amount">
+                            <span class="main-amount">${option.diamonds}</span>
+                            <span class="bonus-amount">+${option.bonus} bonus</span>
+                        </div>
+                        <div class="option-price">Rp ${option.price.toLocaleString('id-ID')}</div>
+                        ${option.popular ? '<div class="popular-badge">POPULER</div>' : ''}
+                    `;
+                    
+                    optionElement.addEventListener('click', () => {
+                        // Remove selected class from all options
+                        document.querySelectorAll('.option-card').forEach(card => {
+                            card.classList.remove('selected');
+                        });
+                        // Add selected class to clicked option
+                        optionElement.classList.add('selected');
+                        selectedDiamondOption = option;
+                        checkFormValidity();
+                    });
+                    
+                    diamondOptionsContainer.appendChild(optionElement);
+                });
+            }
+
+            // Check if all required fields are filled
+            function checkFormValidity() {
+                const isUserIdValid = userIdInput.value.trim().length >= 6;
+                const isServerSelected = serverSelect.value !== '';
+                const isDiamondSelected = selectedDiamondOption !== null;
+                
+                addToCartButton.disabled = !(isUserIdValid && isServerSelected && isDiamondSelected);
+            }
+
+            // Add event listeners for form validation
+            userIdInput.addEventListener('input', checkFormValidity);
+            serverSelect.addEventListener('change', checkFormValidity);
+
+            // Add to cart functionality
+            addToCartButton.addEventListener('click', function() {
+                if (addToCartButton.disabled) return;
+                
+                // Create cart item object
+                const cartItem = {
+                    game: 'Mobile Legends',
+                    product: 'Diamond',
+                    userId: userIdInput.value.trim(),
+                    server: serverSelect.value,
+                    diamonds: selectedDiamondOption.diamonds,
+                    bonus: selectedDiamondOption.bonus,
+                    price: selectedDiamondOption.price,
+                    timestamp: new Date().getTime()
+                };
+                
+                // Add to cart (using localStorage)
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(cartItem);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Show notification
+                notificationToast.style.display = 'block';
+                setTimeout(() => {
+                    notificationToast.style.display = 'none';
+                }, 3000);
+                
+                // Reset form
+                userIdInput.value = '';
+                serverSelect.value = '';
+                selectedDiamondOption = null;
+                document.querySelectorAll('.option-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                addToCartButton.disabled = true;
+                
+                // Optionally redirect to cart page after delay
+                setTimeout(() => {
+                    window.location.href = 'cart.html';
+                }, 1000);
+            });
+
+            // Initialize the page
+            renderDiamondOptions();
+        });
+    </script>
+</body>
+</html>
